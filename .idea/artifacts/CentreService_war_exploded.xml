@@ -27,6 +27,7 @@
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf:3.0.11.RELEASE" />
           <element id="library" level="project" name="Maven: org.attoparser:attoparser:2.0.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.26" />
           <element id="library" level="project" name="Maven: org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-web:2.1.6.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-json:2.1.6.RELEASE" />
@@ -49,14 +50,13 @@
           <element id="library" level="project" name="Maven: org.mybatis.spring.boot:mybatis-spring-boot-autoconfigure:2.0.1" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.1" />
           <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:2.0.1" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-data-redis:2.1.6.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-redis:1.4.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-redis:2.1.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-keyvalue:2.1.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:2.1.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.1.8.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-oxm:5.1.8.RELEASE" />
           <element id="library" level="project" name="Maven: redis.clients:jedis:2.9.3" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.26" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-pool2:2.4.3" />
           <element id="library" level="project" name="Maven: net.sourceforge.nekohtml:nekohtml:1.9.22" />
           <element id="library" level="project" name="Maven: xerces:xercesImpl:2.11.0" />

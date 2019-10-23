@@ -38,24 +38,11 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.0.1</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.lettuce</groupId>
-                    <artifactId>lettuce-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>1.4.0.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -122,11 +109,14 @@
             <artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
             <version>1.2.3</version>
         </dependency>
+
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.3</version>
         </dependency>
+
+        <!--日志操作注释掉了-->
     </dependencies>
 
     <build>
@@ -137,5 +127,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
