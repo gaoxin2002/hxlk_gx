@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxlk.centre.mapper.PatientInfoDefMapper">
+
+    <!--出入院时修改病人状态-->
+    <update id="updatePatientState" parameterType="com.hxlk.centre.entity.PatientInfo">
+        update `patient_info`
+        set
+          `Status` = #{status},
+          `Record_Id` = #{record_id}
+        where Id = #{id};
+    </update>
+
+    <insert id="addPatientInfo" parameterType="com.hxlk.centre.entity.PatientInfo" useGeneratedKeys="true"
+            keyProperty="id">
+       INSERT INTO `hxlk_system`.`patient_info` (
+          `Name`,
+          `Sex`,
+          `Telephone`,
+          `Status`,
+          `infusion_sum`,
+          `age`,
+          `doctor_name`,
+          `nurse_name`,
+           `in_hos_time`,
+           Record_Id,
+           weight
+        )
+        VALUES
+          (
+            #{name},
+            #{sex},
+            #{telephone},
+            #{status},
+            #{infusion_sum},
+            #{age},
+            #{doctorName},
+            #{nurseName},
+            #{inHosTime},
+            0,
+            #{weight}
+          ) ;
+
+    </insert>
+
+    <update id="updatePatientInfo" parameterType="com.hxlk.centre.entity.PatientInfo">
+          UPDATE patient_info
+            SET `Name`=#{name},Sex=#{sex},Telephone=#{telephone},age=#{age},doctor_name=#{doctorName},
+                  nurse_name=#{nurseName},in_hos_time=#{inHosTime},weight=#{weight}
+            WHERE id=#{id}
+    </update>
+
+    <select id="getPatientInfoById" resultType="com.hxlk.centre.entity.PatientInfo">
+       SELECT * from patient_info WHERE Id=#{id}
+    </select>
+
+    <update id="updatePatientRecordId" parameterType="com.hxlk.centre.entity.PatientInfo">
+            UPDATE patient_info
+            SET Record_Id=#{record_id}
+            WHERE Id=#{id}
+    </update>
+        <!--二级界面通过病人编号查询病人相关信息-->
+    <select id="findPatientInfoById" resultType="java.util.Map">
+       SELECT si.Patient_Id  patientId ,si.Sickbed_Id sickbedNum,pi.Name  patientName,pi.Sex sex,pi.age,DATE_FORMAT(pi.in_hos_time,'%Y-%m-%d %H:%i:%s') inHosTime
+      ,pi.Telephone  patientPhone,pir.Department  departmentName
+      ,pi.doctor_name doctorName,pi.nurse_name nurseName,pi.infusion_sum transfusionSum,
+        cpm.Bladder bladder,cpm.Transfusion_Progress transfusionProgress,cpm.Urine_Switch  urineSwitch,cpm.Transfusion_Switch transfusionSwitch,cpm.Urine_Time urineTimer
+        from sickbed_info si
+        LEFT JOIN patient_info pi
+        on pi.Id=si.Patient_Id
+        LEFT JOIN current_patient_monitor_info cpm
+        on cpm.patient_id=pi.id
+				LEFT JOIN patient_inout_record pir
+				on pir.id=pi.Record_Id
+        WHERE si.Sickbed_Id=#{sickbed_id}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxlk.centre.mapper.HxlkHospMapper">
+
+    <insert id="patientRegister" parameterType="com.hxlk.centre.entity.PatientInfo">
+       INSERT INTO `patient_info`
+       (
+          Name, Sex, Birthdate, Telephone, Status, Record_Id
+       )
+       VALUES
+       (
+          #{name}, #{sex}, #{birthdate}, #{telephone}, #{status}, #{record_id}
+       )
+    </insert>
+
+    <select id="getPatientList" resultType="com.hxlk.centre.entity.PatientInfo">
+        select
+          `Id`,
+          `Name`,
+          `Sex`,
+          `Birthdate`,
+          `Telephone`,
+          `Status`,
+          `Record_Id`
+        from `patient_info` t order by Id desc;
+    </select>
+
+    <delete id="patientDelete" parameterType="com.hxlk.centre.entity.PatientInfo">
+        delete from `patient_info` where Id = #{id};
+    </delete>
+
+    <delete id="deviceDelete" parameterType="com.hxlk.centre.entity.DeviceInfo">
+        delete from `device_info` where Id = #{id};
+    </delete>
+
+    <update id="patientEdit" parameterType="com.hxlk.centre.entity.PatientInfo">
+        update `patient_info`
+        set
+          `Name` = #{name},
+          `Sex` = #{sex},
+          `Birthdate` = #{birthdate},
+          `Telephone` = #{telephone}
+        where Id = #{id};
+    </update>
+
+    <update id="editPatientStatus" parameterType="com.hxlk.centre.entity.PatientInfo">
+        update `patient_info`
+        set
+          `Status` = #{status},
+          `Record_Id` = #{record_id}
+        where Id = #{id};
+    </update>
+
+    <insert id="inOutPatient" parameterType="com.hxlk.centre.entity.PatientInOutRecord">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into `patient_inout_record`
+        (
+        `Patient_Id`,
+        `In_Out`,
+        `Operate_Time`,
+        `Department`,
+        `Operator`,
+        `Doctor`,
+        `Nurse`,
+        `Sickbed_Id`
+        )
+        values(
+        #{patient_id},
+        #{in_out},
+        #{operate_time},
+        #{department},
+        #{operator},
+        #{doctor},
+        #{nurse},
+        #{sickbed_id}
+        );
+    </insert>
+
+    <select id="getMedicalWorkerList" resultType="com.hxlk.centre.entity.MedicalWorkerInfo">
+        select
+          `Id`,
+          `Name`,
+          `Duty`
+        from `medical_worker_info` t order by Id desc;
+    </select>
+
+    <insert id="medicalWorkerRegister" parameterType="com.hxlk.centre.entity.MedicalWorkerInfo">
+       INSERT INTO `medical_worker_info`
+       (
+          Name, Duty
+       )
+       VALUES
+       (
+          #{name}, #{duty}
+       )
+    </insert>
+
+    <update id="updateMedicalWorker" parameterType="com.hxlk.centre.entity.MedicalWorkerInfo">
+        update `medical_worker_info`
+        set
+          `Duty` = #{duty}
+        where Name = #{name};
+    </update>
+
+    <delete id="medicalWorkerDelete" parameterType="com.hxlk.centre.entity.MedicalWorkerInfo">
+        delete from `medical_worker_info` where Id = #{id};
+    </delete>
+
+    <insert id="insertPatientMonitorData" parameterType="com.hxlk.centre.entity.PatientMonitorInfo">
+       INSERT INTO `patient_monitor_info`
+       (
+          Occur_Time,
+          Device_Id,
+          Temperature,
+          Sphygmus,
+          Blood_Oxygen,
+          Blood_Sugar,
+          Urinate_Volume,
+          Transfusion_Progress,
+          Bladder,
+          Urine_Time,
+          Urine_Switch,
+          Transfusion_Switch,
+          q_max,
+          Patient_Id,
+          Patient_name
+       )
+       VALUES
+       (
+          #{occur_time},
+          #{device_id},
+          #{temperature},
+          #{sphygmus},
+          #{blood_oxygen},
+          #{blood_sugar},
+          #{urinate_volume},
+          #{transfusion_progress},
+          #{bladder},
+          #{urine_time},
+          #{urine_switch},
+          #{transfusion_switch},
+          #{qmax},
+          #{Patient_Id},
+          #{Patient_name}
+       )
+    </insert>
+
+    <select id="getCurrentPatientMonitor" resultType="com.hxlk.centre.entity.PatientMonitorInfo">
+        select
+          `Id`                  as 编号,
+          `Occur_Time`          as 时间,
+          `Device_Id`           as 设备ID,
+          `Temperature`         as 体温,
+          `Sphygmus`            as 脉搏,
+          `Blood_Oxygen`        as 血氧,
+          `Blood_Sugar`         as 血糖,
+          `Urinate_Volume`      as 尿液,
+          `Transfusion_Progress` as 输液进度,
+          `Bladder`             as 膀胱训练,
+          `Urine_Time`          as 排尿计时,
+          `Urine_Switch`        as 尿袋开关,
+          `Transfusion_Switch`  as 输液开关
+        from `current_patient_monitor_info` t;
+    </select>
+
+    <insert id="deviceRegister" parameterType="com.hxlk.centre.entity.DeviceInfo">
+       INSERT INTO `device_info`
+       (
+          Device_Id, Production_Date, Setup_Date
+       )
+       VALUES
+       (
+          #{device_id}, #{production_date}, #{setup_date}
+       )
+    </insert>
+
+    <update id="updateDeviceInfo" parameterType="com.hxlk.centre.entity.DeviceInfo">
+        update `device_info`
+        set
+          `Sickbed_Id`          = #{sickbed_id}
+        where Device_Id = #{device_id};
+    </update>
+
+    <select id="getDeviceList" resultType="com.hxlk.centre.entity.DeviceInfo">
+        select
+          Id, Device_Id, Production_Date, Setup_Date
+        from `device_info` t;
+    </select>
+
+    <insert id="sickbedRegister" parameterType="com.hxlk.centre.entity.SickbedInfo">
+       INSERT INTO `sickbed_info`
+       (
+          Sickbed_Id,
+          Device_Id,
+          Patient_Id
+       )
+       VALUES
+       (
+          #{sickbed_id}, #{device_id}, #{patient_id}
+       )
+    </insert>
+
+    <select id="getSickbedList" resultType="com.hxlk.centre.entity.SickbedInfo">
+        select
+          Id, Sickbed_Id, Device_Id, Patient_Id
+        from `sickbed_info` t;
+    </select>
+
+    <select id="getSickbedPatientViewList" resultType="com.hxlk.centre.entity.SickbedPatientView">
+        select
+            sickbed_id, device_id, patient_id, name, sex, birthdate, telephone
+        from `sickbed_patient_view`;
+    </select>
+
+    <select id="getSickbedMonitorViewList" resultType="com.hxlk.centre.entity.SickbedMonitorView">
+        select
+            sickbed_id, device_id, patient_id, name, sex, birthdate, occur_time, temperature, sphygmus,
+            blood_oxygen, blood_sugar, urinate_volume, transfusion_progress, bladder, urine_time, urine_switch,
+            transfusion_switch, operate_time, doctor, nurse,infusion_sum
+        from `sickbed_monitor_view`;
+    </select>
+    <select id="getSickbedMonitorViewList2" resultType="java.util.Map">
+        select
+            si.Sickbed_Id as sickedId,si.Device_Id as deviceId,si.Patient_Id as patientId,pi.weight,
+            pi.Name as patientName,pi.Sex as sex,pi.age,pi.doctor_name as doctorName,pi.nurse_name as nurseName,
+            date(pi.in_hos_time) as inHosTime,pi.infusion_sum as infusionSum,
+            cpmi.Occur_Time as dataTime,cpmi.Temperature as temperature,cpmi.Sphygmus as sphygmus,cpmi.Blood_Oxygen as spo2,
+            cpmi.Blood_Sugar as bloodSugar,cpmi.Urinate_Volume as urinateVol,cpmi.Transfusion_Progress as transfusionProgress,
+            cpmi.Bladder as bladder,cpmi.Urine_Time as urineTime,cpmi.Urine_Switch as urineSwitch,cpmi.Transfusion_Switch as transfusionSwitch
+            from sickbed_info si
+            left join patient_info pi on si.Patient_Id = pi.Id
+            left join current_patient_monitor_info cpmi on cpmi.patient_id = si.Patient_Id
+            order by si.Sickbed_Id
+    </select>
+
+    <update id="updateSickbedInfoDeviceId" parameterType="com.hxlk.centre.entity.SickbedInfo">
+        update `sickbed_info`
+        set
+          `Device_Id`  = #{device_id}
+        where Sickbed_Id = #{sickbed_id};
+    </update>
+
+    <update id="updateSickbedInfoPatientId" parameterType="com.hxlk.centre.entity.SickbedInfo">
+        update `sickbed_info`
+        set
+          `Patient_Id`  = #{patient_id}
+        where Sickbed_Id = #{sickbed_id};
+    </update>
+
+    <insert id="insertDeviceIntoCurrentPatientMointor" parameterType="com.hxlk.centre.entity.PatientMonitorInfo">
+       INSERT INTO `current_patient_monitor_info`
+       (
+          Occur_Time,
+          Device_Id,
+          Temperature,
+          Sphygmus,
+          Blood_Oxygen,
+          Blood_Sugar,
+          Urinate_Volume,
+          Transfusion_Progress,
+          Bladder,
+          Urine_Time,
+          Urine_Switch,
+          Transfusion_Switch
+       )
+       VALUES
+       (
+          #{occur_time},
+          #{device_id},
+          #{temperature},
+          #{sphygmus},
+          #{blood_oxygen},
+          #{blood_sugar},
+          #{urinate_volume},
+          #{transfusion_progress},
+          #{bladder},
+          #{urine_time},
+          #{urine_switch},
+          #{transfusion_switch}
+       )
+    </insert>
+
+    <update id="updateCurrentPatientMonitorByDevice" parameterType="com.hxlk.centre.entity.PatientMonitorInfo">
+        update `current_patient_monitor_info`
+        set
+          `Occur_Time`          = #{occur_time},
+          `Temperature`         = #{temperature},
+          `Sphygmus`            = #{sphygmus},
+          `Blood_Oxygen`        = #{blood_oxygen},
+          `Blood_Sugar`         = #{blood_sugar},
+          `Urinate_Volume`      = #{urinate_volume},
+          `Transfusion_Progress` = #{transfusion_progress},
+          `Bladder`             = #{bladder},
+          `Urine_Time`          = #{urine_time},
+          `Urine_Switch`        = #{urine_switch},
+          `Transfusion_Switch`  = #{transfusion_switch},
+          `q_max` = #{qmax}
+        where Device_Id = #{device_id};
+    </update>
+
+    <insert id="insertPatientInOutRecord" parameterType="com.hxlk.centre.entity.PatientInOutRecord">
+       INSERT INTO `current_patient_monitor_info`
+       (
+          Patient_Id,
+          In_Out,
+          Patient_Id,
+          Operate_Time,
+          Department,
+          Operater,
+          Doctor,
+          Nurse,
+          Sickbed_Id
+       )
+       VALUES
+       (
+          #{patient_id},
+          #{in_out},
+          #{patient_id},
+          #{operate_time},
+          #{department},
+          #{operater},
+          #{doctor},
+          #{nurse},
+          #{sickbed_id}
+       )
+    </insert>
+    <!--根据机器编码 查询病人的出院记录和信息-->
+    <select id="getPatientInfoByDeviceNum" resultType="java.util.Map">
+    SELECT si.Device_Id  ,si.Sickbed_Id as bedNum ,si.Patient_Id,pi.Name  ,pi.Sex,
+    DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(pi.Birthdate)), '%Y')+1 patientAge,
+    pir.In_Out ,
+    pir.Operator ,
+    pir.Doctor ,
+    pir.Nurse,
+    pir.Operate_Time
+    FROM sickbed_info  si
+    LEFT JOIN patient_info pi
+    on si.Patient_Id=pi.Id
+    LEFT JOIN (select *  from  patient_inout_record  as pirr
+    where In_Out = '入院' and  pirr.Patient_Id =
+    (SELECT Patient_Id from sickbed_info WHERE Device_Id=#{deviceNum})  order by Id desc limit 1  ) pir
+    on pir.Patient_Id=pi.id
+    WHERE si.Device_Id=#{deviceNum}
+</select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxlk.centre.mapper.SickbedInfoDefMapper">
+
+    <!--出入院时修改病床的病人编号-->
+    <update id="updateSickbedInfoPatientId" parameterType="com.hxlk.centre.entity.SickbedInfo" >
+        update `sickbed_info`
+        set
+        `Patient_Id`  = #{patient_id}
+        where Sickbed_Id = #{sickbed_id};
+    </update>
+
+    <select id="findUsableSickbed" resultType="java.util.Map">
+        SELECT id,Sickbed_Id sickbedNum from sickbed_info
+        WHERE Patient_Id=0
+    </select>
+
+
+    <!--换床时将病人当前病床为0(代表没人状态)-->
+    <update id="updateSickbedInfo" parameterType="com.hxlk.centre.entity.SickbedInfo">
+        UPDATE sickbed_info SET Patient_Id=0
+        WHERE  Sickbed_Id=#{sickbed_id}
+    </update>
+
+
+    <!--换床-->
+    <update id="updateOperation" parameterType="com.hxlk.centre.entity.SickbedInfo">
+      UPDATE sickbed_info SET Patient_Id=#{patient_id}
+        WHERE Sickbed_Id=#{sickbed_id}
+    </update>
+
+
+</mapper>

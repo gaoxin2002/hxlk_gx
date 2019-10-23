@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+        <title>Monitor</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div style="text-align: center;margin:0 auto;width: 1000px; ">
+        <h1>Patient Information</h1>
+        <table width="100%" border="1" cellspacing="1" cellpadding="0">
+            <tr>
+                <td>ID</td>
+                <td>NAME</td>
+                <td>SEX</td>
+                <td>AGE</td>
+                <td>DEPARTMENT</td>
+            </tr>
+            <tr th:each="patient : ${list_patient_info}">
+                <td th:text="${patient.id}"></td>
+                <td th:text="${patient.name}"></td>
+                <td th:text="${patient.sex}"></td>
+                <td th:text="${patient.age}"></td>
+                <td th:text="${patient.department}"></td>
+            </tr>
+        </table>
+
+        <h1>Patient Monitor</h1>
+        <table width="100%" border="1" cellspacing="1" cellpadding="0">
+            <tr>
+                <td>ID</td>
+                <td>PATIENT ID</td>
+                <td>TEMPERATURE</td>
+                <td>SPHYGMUS</td>
+                <td>TRANSFUSION PROGRESS</td>
+                <td>BLOOD SUGAR</td>
+                <td>BLOOD OXYGEN</td>
+                <td>URINATE</td>
+            </tr>
+            <tr th:each="patient_monitor : ${list_patient_monitor_info}">
+                <td th:text="${patient_monitor.id}"></td>
+                <td th:text="${patient_monitor.patient_id}"></td>
+                <td th:text="${patient_monitor.temperature}"></td>
+                <td th:text="${patient_monitor.sphygmus}"></td>
+                <td th:text="${patient_monitor.transfusion_progress}"></td>
+                <td th:text="${patient_monitor.blood_sugar}"></td>
+                <td th:text="${patient_monitor.blood_oxygen}"></td>
+                <td th:text="${patient_monitor.urinate}"></td>
+            </tr>
+        </table>
+</div>
+</body>
+</html>

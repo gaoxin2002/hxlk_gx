@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxlk.centre.mapper.PatientMonitorMapper">
+    <select id="selectMonitorDataCharList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT dh.time, pmi.id, pmi.Temperature AS temperature, pmi.Blood_Sugar AS booldSugar, pmi.Blood_Oxygen AS spo2
+        , pmi.Urinate_Volume AS urinateVol, pmi.Sphygmus AS sphygmus,pmi.ts
+        FROM date_2hour dh
+            LEFT JOIN (
+                SELECT MIN(Id) AS id, Occur_Time
+                    , substring(Occur_Time, 12, 2) AS hour2
+                    , Blood_Sugar, Temperature, Blood_Oxygen, Urinate_Volume, Sphygmus,Occur_Time as ts
+                FROM patient_monitor_info
+                WHERE date(Occur_Time) = date(#{date})
+                    AND Patient_Id = #{patientId}
+                GROUP BY hour2
+            ) pmi
+            ON dh.day_hour = pmi.hour2
+        ORDER BY dh.id;
+    </select>
+    
+    <select id="selectPatientIdByDeviceId" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select Patient_Id as patientId from sickbed_info where Device_Id = #{deviceId} limit 1
+    </select>
+
+    <update id="updatePatientInfusion" parameterType="java.util.Map">
+        update patient_info set infusion_sum = #{transfusionSum}
+            where Id = #{patientId}
+    </update>
+</mapper>

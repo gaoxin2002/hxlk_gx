@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxlk.centre.mapper.PatientInoutRecordMapper">
+    <!--添加出入院信息-->
+    <insert id="insertPatientInoutRecordInfo" parameterType="com.hxlk.centre.entity.PatientInOutRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into `patient_inout_record`
+        (
+        `Patient_Id`,
+        `In_Out`,
+        `Operate_Time`,
+         `department`,
+        `Operator`,
+        `Sickbed_Id`
+        )
+        values(
+        #{patient_id},
+        #{in_out},
+        #{operate_time},
+        #{department},
+        #{operator},
+        #{sickbed_id}
+        );
+        </insert>
+    <update id="updatePatientInoutRecordInfo" parameterType="com.hxlk.centre.entity.PatientInOutRecord">
+        UPDATE patient_inout_record
+        SET Department=#{department},Doctor=#{doctor},Nurse=#{nurse},Operator=#{operator},Operate_Time=#{operate_time}
+        where id=#{id}
+    </update>
+
+
+
+</mapper>

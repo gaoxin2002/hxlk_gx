@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxlk.centre.mapper.aft.PatientInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.hxlk.centre.entity.aft.PatientInfo" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="Sex" property="sex" jdbcType="VARCHAR" />
+    <result column="Birthdate" property="birthdate" jdbcType="VARCHAR" />
+    <result column="Telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="INTEGER" />
+    <result column="Record_Id" property="recordId" jdbcType="INTEGER" />
+    <result column="infusion_sum" property="infusionSum" jdbcType="INTEGER" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="doctor_name" property="doctorName" jdbcType="VARCHAR" />
+    <result column="nurse_name" property="nurseName" jdbcType="VARCHAR" />
+    <result column="in_hos_time" property="inHosTime" jdbcType="TIMESTAMP" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, Name, Sex, Birthdate, Telephone, Status, Record_Id, infusion_sum, age, doctor_name, 
+    nurse_name, in_hos_time, weight
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hxlk.centre.entity.aft.PatientInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from patient_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from patient_info
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from patient_info
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hxlk.centre.entity.aft.PatientInfoExample" >
+    delete from patient_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hxlk.centre.entity.aft.PatientInfo" >
+    insert into patient_info (Id, Name, Sex, 
+      Birthdate, Telephone, Status, 
+      Record_Id, infusion_sum, age, 
+      doctor_name, nurse_name, in_hos_time, 
+      weight)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{birthdate,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{recordId,jdbcType=INTEGER}, #{infusionSum,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, 
+      #{doctorName,jdbcType=VARCHAR}, #{nurseName,jdbcType=VARCHAR}, #{inHosTime,jdbcType=TIMESTAMP}, 
+      #{weight,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hxlk.centre.entity.aft.PatientInfo" >
+    insert into patient_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        Id,
+      </if>
+      <if test="name != null" >
+        Name,
+      </if>
+      <if test="sex != null" >
+        Sex,
+      </if>
+      <if test="birthdate != null" >
+        Birthdate,
+      </if>
+      <if test="telephone != null" >
+        Telephone,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="recordId != null" >
+        Record_Id,
+      </if>
+      <if test="infusionSum != null" >
+        infusion_sum,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="doctorName != null" >
+        doctor_name,
+      </if>
+      <if test="nurseName != null" >
+        nurse_name,
+      </if>
+      <if test="inHosTime != null" >
+        in_hos_time,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        #{birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="recordId != null" >
+        #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="infusionSum != null" >
+        #{infusionSum,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="nurseName != null" >
+        #{nurseName,jdbcType=VARCHAR},
+      </if>
+      <if test="inHosTime != null" >
+        #{inHosTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hxlk.centre.entity.aft.PatientInfoExample" resultType="java.lang.Integer" >
+    select count(*) from patient_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update patient_info
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        Name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        Sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthdate != null" >
+        Birthdate = #{record.birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        Telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        Status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.recordId != null" >
+        Record_Id = #{record.recordId,jdbcType=INTEGER},
+      </if>
+      <if test="record.infusionSum != null" >
+        infusion_sum = #{record.infusionSum,jdbcType=INTEGER},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctorName != null" >
+        doctor_name = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nurseName != null" >
+        nurse_name = #{record.nurseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inHosTime != null" >
+        in_hos_time = #{record.inHosTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.weight != null" >
+        weight = #{record.weight,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update patient_info
+    set Id = #{record.id,jdbcType=INTEGER},
+      Name = #{record.name,jdbcType=VARCHAR},
+      Sex = #{record.sex,jdbcType=VARCHAR},
+      Birthdate = #{record.birthdate,jdbcType=VARCHAR},
+      Telephone = #{record.telephone,jdbcType=VARCHAR},
+      Status = #{record.status,jdbcType=INTEGER},
+      Record_Id = #{record.recordId,jdbcType=INTEGER},
+      infusion_sum = #{record.infusionSum,jdbcType=INTEGER},
+      age = #{record.age,jdbcType=INTEGER},
+      doctor_name = #{record.doctorName,jdbcType=VARCHAR},
+      nurse_name = #{record.nurseName,jdbcType=VARCHAR},
+      in_hos_time = #{record.inHosTime,jdbcType=TIMESTAMP},
+      weight = #{record.weight,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hxlk.centre.entity.aft.PatientInfo" >
+    update patient_info
+    <set >
+      <if test="name != null" >
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        Sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        Birthdate = #{birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        Telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="recordId != null" >
+        Record_Id = #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="infusionSum != null" >
+        infusion_sum = #{infusionSum,jdbcType=INTEGER},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="doctorName != null" >
+        doctor_name = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="nurseName != null" >
+        nurse_name = #{nurseName,jdbcType=VARCHAR},
+      </if>
+      <if test="inHosTime != null" >
+        in_hos_time = #{inHosTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hxlk.centre.entity.aft.PatientInfo" >
+    update patient_info
+    set Name = #{name,jdbcType=VARCHAR},
+      Sex = #{sex,jdbcType=VARCHAR},
+      Birthdate = #{birthdate,jdbcType=VARCHAR},
+      Telephone = #{telephone,jdbcType=VARCHAR},
+      Status = #{status,jdbcType=INTEGER},
+      Record_Id = #{recordId,jdbcType=INTEGER},
+      infusion_sum = #{infusionSum,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      doctor_name = #{doctorName,jdbcType=VARCHAR},
+      nurse_name = #{nurseName,jdbcType=VARCHAR},
+      in_hos_time = #{inHosTime,jdbcType=TIMESTAMP},
+      weight = #{weight,jdbcType=DOUBLE}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

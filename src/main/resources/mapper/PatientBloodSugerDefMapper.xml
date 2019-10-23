@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hxlk.centre.mapper.PatientBloodSugerDefMapper">
+
+
+    <!--根据时间和病人编号查询血糖-->
+    <select id="selectPatientBloodSuger" resultType="java.util.Map">
+      SELECT pbs.id,pbs.blood_suger bloodSuger,pbs.ts ts,pbs.patient_id patientId
+      FROM `patient_blood_suger` pbs
+      WHERE date(pbs.ts) = date(#{ts})
+      AND Patient_Id = #{patientId}
+    </select>
+
+    <!--根据时间和病人编号查询-->
+    <select id="selectPatientBloodSugerByDate" resultType="java.util.Map">
+        SELECT pbs.id,pbs.blood_suger bloodSuger,pbs.ts ts,date(pbs.ts) date,DATE_FORMAT(pbs.ts,'%H:%i') dateTime,pbs.patient_id patientId
+        FROM `patient_blood_suger` pbs
+                                                                                      WHERE pbs.ts &gt;=#{startTime} and pbs.ts &lt;=#{endTime}
+        and pbs.patient_id =#{patientId} ORDER BY  pbs.ts
+    </select>
+
+    <!--根据时间和病人编号查询除血糖外所有的数据-->
+    <select id="selectMonitorByDate" resultType="java.util.Map">
+        SELECT dm.time, pmi.id, pmi.Temperature AS temperature, pmi.Blood_Sugar AS booldSugar, pmi.Blood_Oxygen AS spo2
+        , pmi.Urinate_Volume AS urinateVol, pmi.Sphygmus AS sphygmus, pmi.ts, date(pmi.ts) AS date
+        , DATE_FORMAT(pmi.ts, '%H:%i') AS dateTime
+    FROM date_10min dm
+        LEFT JOIN (
+            SELECT MIN(Id) AS id, Occur_Time
+                , substring(Occur_Time, 12, 4) AS hour2
+                , Blood_Sugar, Temperature, Blood_Oxygen, Urinate_Volume, Sphygmus
+                , Occur_Time AS ts
+            FROM patient_monitor_info
+            WHERE date(Occur_Time) = date(#{time})
+                AND Patient_Id = #{patientId}
+            GROUP BY hour2
+        ) pmi
+        ON dm.day_hour = pmi.hour2
+    WHERE dm.day_hour != '24:00'
+        and pmi.id  &lt;  45179
+    ORDER BY dm.id;
+    </select>
+    
+</mapper>
