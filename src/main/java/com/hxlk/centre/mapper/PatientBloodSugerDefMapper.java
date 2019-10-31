@@ -15,8 +15,12 @@ public interface PatientBloodSugerDefMapper {
     //根据时间和病人编号查询
     List<Map<String,Object>> selectPatientBloodSugerByDate(Map<String,Object> params);
 
-    //根据时间和病人编号查询除血糖外所有的数据
+    //根据时间和病人编号查询除血糖外所有的数据(10分钟制)
     List<Map<String,Object>> selectMonitorByDate(Map<String,Object> params);
+
+
+    public void insertDate(String date);
+
 
 }
 
